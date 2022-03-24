@@ -7,7 +7,7 @@
 
 <h3 align="center"> 🚀 Skills and Experience with Tools/Technologies </h3>
 <p align="center"> 
-    <a href="https://www.jenkins.io" target="_blank"> <img src="https://www.vectorlogo.zone/logos/jenkins/jenkins-icon.svg" alt="jenkins" width="50"       height="50"/>
+    <a href="https://www.jenkins.io" target="_blank"> <img src="https://www.vectorlogo.zone/logos/jenkins/jenkins-icon.svg" alt="jenkins" width="50"       height="50"/> </a>
     <a href="https://git-scm.com/" target="_blank"> <img src="https://img.icons8.com/color/48/000000/git.png" alt="jenkins" width="50" height="50"/> </a>
     <a href="https://www.java.com" target="_blank"> <img src="https://img.icons8.com/color/48/000000/java-coffee-cup-logo.png" alt="java" width="50"       height="50"/> </a>
     <a href="https://maven.apache.org/" target="_blank"> <img src="https://roufid.com/wp-content/uploads/2016/05/eyecatch-maven.png" alt="maven" width="50" height="50"/> </a>
