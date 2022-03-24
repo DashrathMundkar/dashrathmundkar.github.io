@@ -11,7 +11,7 @@
     <a href="https://git-scm.com/" target="_blank"> <img src="https://img.icons8.com/color/48/000000/git.png" alt="jenkins" width="50" height="50"/> </a>
     <a href="https://www.java.com" target="_blank"> <img src="https://img.icons8.com/color/48/000000/java-coffee-cup-logo.png" alt="java" width="50"       height="50"/> </a>
     <a href="https://maven.apache.org/" target="_blank"> <img src="https://roufid.com/wp-content/uploads/2016/05/eyecatch-maven.png" alt="maven" width="50" height="50"/> </a>
-    <a href="https://kuberntes.io" target="_blank"> <img src="https://img.icons8.com/color/48/000000/kubernetes.png" alt="kubenetes" width="50" height="50"/> </a>
+    <a href="https://kubernetes.io" target="_blank"> <img src="https://img.icons8.com/color/48/000000/kubernetes.png" alt="kubenetes" width="50" height="50"/> </a>
     <a href="https://www.redhat.com/en/technologies/cloud-computing/openshift" target="_blank"> <img src="https://uploads-ssl.webflow.com/5dfc5162b82831ac5bbb9872/5e4ff01ebdf7f3589fa7bcd3_OpenShift-LogoType.svg.png" alt="openshift" width="50" height="60"/> </a>
     <a href="https://groovy-lang.org/" target="_blank"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Groovy-logo.svg/1200px-Groovy-logo.svg.png"  alt="groovy" width="50" height="50"/> </a>  
     <a href="https://opensource.com/article/19/10/programming-bash-syntax-tools" target="_blank"> <img src="https://www.linuxjournal.com/sites/default/files/styles/wide_thumbnail/public/nodeimage/story/bash-icon.png?itok=-wUXQ14l" alt="bash" width="60" height="40"/> </a>  
