@@ -3,7 +3,7 @@
 <h1 align="center">Hi <img src="https://raw.githubusercontent.com/MartinHeinz/MartinHeinz/master/wave.gif" width="30px">, I'm Dashrath</h1>
 
 <h3 align="center"> About me </h3>
-<p align="center"> I am Dashrath from india. I am currently living in Munich, Germany. I love to play around and experiment cloud native technologies/CICD stuff. I work as DevOps Engineer and handles various tools on daily basis such as kubernetes, jenkins etc and in my free time I like to answer on stackoverflow.</p>
+<p align="center"> I am Dashrath from india <img src="https://img.icons8.com/color/15/000000/india.png"/> . I am currently living in Munich, Germany <img src="https://img.icons8.com/color/15/000000/germany.png"/>. I love to play around and experiment cloud native technologies/CICD stuff. I work as DevOps Engineer and handles various tools on daily basis such as kubernetes, jenkins etc and in my free time I like to answer on stackoverflow.</p>
 
 <h3 align="center"> 🚀 Skills and Experience with Tools/Technologies </h3>
 <p align="center"> 
