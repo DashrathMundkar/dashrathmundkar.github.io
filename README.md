@@ -4,7 +4,7 @@
 
 
 
-<p align="center"><a href="#"><img width="20%" height="auto"src="https://github.com/DashrathMundkar/dashrathmundkar.github.io/blob/main/imageedit_1_2656207131.png" height="20px"/></a></p>
+<p align="center"> <a href="#"> <img width="20%" height="auto"src="https://github.com/DashrathMundkar/dashrathmundkar.github.io/blob/main/imageedit_1_2656207131.png" height="20px"/></a> </p>
 
 <h1 align="center">Hi <img src="https://raw.githubusercontent.com/MartinHeinz/MartinHeinz/master/wave.gif" width="30px">, I'm Dashrath</h1>
 
