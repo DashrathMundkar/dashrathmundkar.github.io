@@ -1,5 +1,5 @@
 <p align="center">
-   <a href="https://git-scm.com/" target="_blank"> <img src="https://github.com/DashrathMundkar/dashrathmundkar.github.io/blob/main/imageedit_1_2656207131.png" alt="jenkins" width="175" height="175"/> </a>
+   <a href="#" target="_blank"> <img src="https://github.com/DashrathMundkar/dashrathmundkar.github.io/blob/main/imageedit_1_2656207131.png" width="175" height="175px"/> </a>
 </p>
 
 <h1 align="center">Hi <img src="https://raw.githubusercontent.com/MartinHeinz/MartinHeinz/master/wave.gif" width="30px">, I'm Dashrath</h1>
