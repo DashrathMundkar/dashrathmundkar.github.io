@@ -36,6 +36,11 @@
 </p>
 
 <h3 align="center"> Latest Tweets on Twitter </h3>
+
+<p align="center"> 
+   <a href="https://twitter.com/dash_mundkar18"> <img src="https://img.shields.io/badge/-Follow-blue?style=for-the-badge&logo=twitter&logoColor=white"></a> 
+</p>
+
 <p align="center">
 <img src ="https://github-readme-twitter.gazf.vercel.app/api?id=dash_mundkar18&layout=wide"/> 
 </p>
