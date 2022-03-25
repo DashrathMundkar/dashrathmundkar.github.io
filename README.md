@@ -1,5 +1,5 @@
 <p align="center">
-   <a href="#" target="_blank"> <img src="imageedit_1_2656207131.png" width="175" height="175px"/> </a>
+   <a href="#" target="_blank"> <img src="imageedit_1_2656207131.png" width="200" height="200px"/> </a>
 </p>
 
 <h1 align="center">Hi <img src="https://raw.githubusercontent.com/MartinHeinz/MartinHeinz/master/wave.gif" width="30px">, I'm Dashrath</h1>
