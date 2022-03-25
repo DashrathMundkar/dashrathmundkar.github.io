@@ -1,4 +1,5 @@
-<a href="#"><img width="100%" height="auto" src="https://i.imgur.com/iXuL1HG.png" height="200px"/></a>
+<p align="center"> <a href="#"><img width="25%" height="auto" src="https://github.com/DashrathMundkar/dashrathmundkar.github.io/blob/main/imageedit_1_2656207131.png" height="100px"/></a> 
+</p>
 
 <h1 align="center">Hi <img src="https://raw.githubusercontent.com/MartinHeinz/MartinHeinz/master/wave.gif" width="30px">, I'm Dashrath</h1>
 
