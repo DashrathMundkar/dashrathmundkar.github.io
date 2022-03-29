@@ -33,7 +33,7 @@
 
 <h3 align="center"> Stackoverflow </h3>
 <p align="center">
-<a href="https://stackexchange.com/users/10960150"><img src="https://stackexchange.com/users/flair/10960150.png?theme=dark" width="208" height="58" alt="profile for Dashrath Mundkar on Stack Exchange, a network of free, community-driven Q&amp;A sites" title="profile for Dashrath Mundkar on Stack Exchange, a network of free, community-driven Q&amp;A sites"></a>
+<a href="https://stackexchange.com/users/10960150"><img src="https://stackexchange.com/users/flair/10960150.png?theme=clean" width="208" height="58" alt="profile for Dashrath Mundkar on Stack Exchange, a network of free, community-driven Q&amp;A sites" title="profile for Dashrath Mundkar on Stack Exchange, a network of free, community-driven Q&amp;A sites"></a>
 </p>
 
 <h3 align="center"> Latest Tweets on Twitter </h3>
