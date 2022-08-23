@@ -43,7 +43,7 @@
 </p>
 
 <p align="center">
-<img src ="https://github-readme-twitter.gazf.vercel.app/api?id=dash_mundkar18&layout=wide"/> 
+<img src ="https://github-readme-twitter.gazf.vercel.app/api?id=dash_mundkar&layout=wide"/> 
 </p>
 
 <h3 align="center"> Views and Followers  </h3>
