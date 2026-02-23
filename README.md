@@ -22,6 +22,7 @@
    <a href="https://docker.com" target="_blank"> <img src="https://img.icons8.com/color/48/000000/docker.png" alt="docker" width="50" height="50"/> </a>
    <a href="https://gitlab.com" target="_blank"> <img src="https://img.icons8.com/color/48/000000/gitlab.png" alt="gitlab" width="50" height="50"/> </a>
    <a href="https://github.com" target="_blank"> <img src="https://img.icons8.com/color/48/000000/github.png" alt="github" width="50" height="50"/> </a>
+    <a href="https://azure.microsoft.com/en-us" target="_blank"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Microsoft_Azure.svg/250px-Microsoft_Azure.svg.png?20211008202712" alt="azure" width="55" height="55"/> </a>
    <a href="https://aws.amazon.com/" target="_blank"> <img src="https://www.consoleconnect.com/wp-content/uploads/2019/07/amazon-web-services-cloud.svg" alt="aws" width="55" height="55"/> </a>
 </p>
 
