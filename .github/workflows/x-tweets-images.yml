@@ -116,9 +116,9 @@ jobs:
           async function renderTweetToPng(page, tweetUrl, filePath) {
             // Use publish.twitter.com so the embed renders consistently, then we screenshot the tweet card.
             const embedUrl =
-              "https://publish.twitter.com/?query=" +
-              encodeURIComponent(tweetUrl) +
-              "&widget=Tweet";
+            "https://publish.twitter.com/?query=" +
+            encodeURIComponent(tweetUrl) +
+            "&widget=Tweet&theme=dark&dnt=true";
           
             await page.goto(embedUrl, { waitUntil: "networkidle" });
           

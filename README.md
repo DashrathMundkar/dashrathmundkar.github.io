@@ -145,13 +145,6 @@ Over the years, I've worked across the full DevOps lifecycle — from infrastruc
 
 <img height="170"
      src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=DashrathMundkar&theme=github_dark" />
-
-<img height="170"
-     src="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=DashrathMundkar&theme=github_dark&utcOffset=1" />
-
-<img height="180"
-     src="https://streak-stats.demolab.com?user=DashrathMundkar&theme=dark&hide_border=true" />
-
 </div>
 
 <!-- Stack Overflow & Latest Activity -->
@@ -167,9 +160,8 @@ Over the years, I've worked across the full DevOps lifecycle — from infrastruc
 <h2 align="center"> Latest Tweets</h2>
 
 <!--START_SECTION:TWEETS_IMG-->
-<p align="center"><img src="assets/tweets/tweet-1.png" alt="Latest post from X" width="600" /></p>
-<p align="center"><img src="assets/tweets/tweet-2.png" alt="Latest post from X" width="600" /></p>
-<p align="center"><img src="assets/tweets/tweet-3.png" alt="Latest post from X" width="600" /></p>
+<p align="center"><img src="assets/tweets/tweet-1.png" alt="Latest post from X" width="350" /></p>
+<p align="center"><img src="assets/tweets/tweet-2.png" alt="Latest post from X" width="350" /></p>
 <!--END_SECTION:TWEETS_IMG-->
 
 <p align="center">
