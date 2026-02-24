@@ -83,6 +83,15 @@ Over the years, I've worked across the full DevOps lifecycle — from infrastruc
     <a href="https://argo-cd.readthedocs.io/en/stable/" target="_blank" style="text-decoration: none;"> 
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMTYHUSnd_ij0PHUmheMQiI8wRIvAi_v329lcx1ku0F5zwT8MeSMBvTWXzb0uHYYlu6Co&usqp=CAU" alt="ArgoCD" width="50" height="50"/> 
     </a>
+    <a href="https://kyverno.io/" target="_blank" style="text-decoration: none;">
+      <img src="https://ayedo.de/apps/kyverno-logo.png" alt="Kyverno" width="65" height="65"/>
+    </a>
+    <a href="https://helm.sh/" target="_blank" style="text-decoration: none;">
+      <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/helm.svg" alt="Helm" width="50" height="50"/>
+    </a>
+    <a href="https://podman.io/" target="_blank" style="text-decoration: none;">
+      <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/podman.svg" alt="Podman" width="50" height="50"/>
+    </a>
 </p>
 
 <p align="center">
