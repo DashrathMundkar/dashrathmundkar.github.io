@@ -39,15 +39,13 @@ jobs:
           const username = process.env.X_USERNAME || "devops_sre18";
           const maxTweets = Number(process.env.MAX_TWEETS || 3);
           
-          // ---- Simple RSS source (no X API key) ----
-          // Many people use rss.app / nitter / other RSS bridges.
-          // Easiest: create an RSS feed for your X profile using rss.app (or similar),
-          // then paste that feed URL here.
-          const RSS_FEED_URL = process.env.X_RSS_FEED_URL || ""; // recommended to set in repo secrets or env
+          // Provide this via GitHub Actions secret, e.g. secrets.X_RSS_FEED_URL
+          const RSS_FEED_URL = process.env.X_RSS_FEED_URL || "";
           
           if (!RSS_FEED_URL) {
-            console.error("Missing X_RSS_FEED_URL. Provide an RSS feed URL for your X timeline.");
-            console.error("Example: use rss.app to generate a feed for https://x.com/" + username);
+            console.error("❌ Missing X_RSS_FEED_URL.");
+            console.error("Set it in GitHub repo secrets and pass it into the workflow env.");
+            console.error(`Expected an RSS feed for: https://x.com/${username}`);
             process.exit(1);
           }
           
@@ -56,24 +54,44 @@ jobs:
           
           async function fetchTweetLinksFromRss(rssUrl, limit) {
             const res = await fetch(rssUrl);
+            if (!res.ok) throw new Error(`Failed to fetch RSS feed: ${res.status} ${res.statusText}`);
             const xml = await res.text();
           
-            // Extract first N tweet links
+            // Extract tweet status links. RSS feeds typically have some non-status links too.
             const links = [];
             const linkRegex = /<link>(.*?)<\/link>/g;
+          
             let match;
-            while ((match = linkRegex.exec(xml)) && links.length < limit + 2) {
-              const url = match[1].trim();
-              // RSS feeds often include channel link first; filter to x.com links
-              if (url.includes("x.com/") && url.includes("/status/")) links.push(url);
+            while ((match = linkRegex.exec(xml)) && links.length < limit * 5) {
+              const url = (match[1] || "").trim();
+          
+              // Accept both x.com and twitter.com status URLs
+              const isStatus =
+                (url.includes("x.com/") || url.includes("twitter.com/")) && url.includes("/status/");
+          
+              if (isStatus) links.push(url);
             }
-            return links.slice(0, limit);
+          
+            // De-duplicate and return top N
+            const uniq = [...new Set(links)];
+            return uniq.slice(0, limit);
           }
           
           function updateReadmeWithImages(imagePaths) {
-            const readme = fs.readFileSync("README.md", "utf8");
+            const readmePath = "README.md";
+            if (!fs.existsSync(readmePath)) {
+              throw new Error("README.md not found at repository root.");
+            }
+          
+            const readme = fs.readFileSync(readmePath, "utf8");
             const start = "<!--START_SECTION:TWEETS_IMG-->";
             const end = "<!--END_SECTION:TWEETS_IMG-->";
+          
+            if (!readme.includes(start) || !readme.includes(end)) {
+              throw new Error(
+                `Missing markers in README.md.\nAdd these where you want images:\n${start}\n${end}`
+              );
+            }
           
             const block =
               imagePaths.length === 0
@@ -82,7 +100,7 @@ jobs:
                   imagePaths
                     .map(
                       (p) =>
-                        `<p align="center"><img src="${p}" alt="Latest tweet" width="600" /></p>`
+                        `<p align="center"><img src="${p}" alt="Latest post from X" width="600" /></p>`
                     )
                     .join("\n") +
                   "\n";
@@ -92,15 +110,53 @@ jobs:
               `${start}${block}${end}`
             );
           
-            fs.writeFileSync("README.md", updated, "utf8");
+            fs.writeFileSync(readmePath, updated, "utf8");
+          }
+          
+          async function renderTweetToPng(page, tweetUrl, filePath) {
+            // Use publish.twitter.com so the embed renders consistently, then we screenshot the tweet card.
+            const embedUrl =
+              "https://publish.twitter.com/?query=" +
+              encodeURIComponent(tweetUrl) +
+              "&widget=Tweet";
+          
+            await page.goto(embedUrl, { waitUntil: "networkidle" });
+          
+            // ✅ FIX: publish.twitter.com has multiple iframes; target the tweet embed iframe only.
+            const tweetFrame = page.frameLocator('iframe[title="X Post"]');
+          
+            // Try the primary selector, then fall back if embed structure changes.
+            let tweet = tweetFrame.locator("article").first();
+            if ((await tweet.count()) === 0) {
+              tweet = tweetFrame.locator('[data-testid="tweet"]').first();
+            }
+          
+            await tweet.waitFor({ state: "visible", timeout: 45000 });
+          
+            // Small delay to allow fonts/images to settle
+            await page.waitForTimeout(1200);
+          
+            await tweet.screenshot({ path: filePath });
           }
           
           (async () => {
             const tweetLinks = await fetchTweetLinksFromRss(RSS_FEED_URL, maxTweets);
           
+            if (tweetLinks.length === 0) {
+              console.log("No tweet links found in RSS feed.");
+              updateReadmeWithImages([]);
+              process.exit(0);
+            }
+          
             const browser = await chromium.launch();
             const page = await browser.newPage({
-              viewport: { width: 900, height: 1200 },
+              viewport: { width: 980, height: 1400 },
+              deviceScaleFactor: 2, // crisper screenshots
+            });
+          
+            // Reduce cookie/consent interruptions
+            await page.setExtraHTTPHeaders({
+              "Accept-Language": "en-US,en;q=0.9",
             });
           
             const saved = [];
@@ -108,33 +164,25 @@ jobs:
             for (let i = 0; i < tweetLinks.length; i++) {
               const url = tweetLinks[i];
           
-              // Use publish.twitter.com embed page for a consistent card render
-              // (still no JS inside README; we screenshot it here in CI)
-              const embedUrl =
-                "https://publish.twitter.com/?query=" +
-                encodeURIComponent(url) +
-                "&widget=Tweet";
-          
-              await page.goto(embedUrl, { waitUntil: "networkidle" });
-          
-              // Tweet is inside an iframe on publish page; screenshot the iframe
-              const frame = page.frameLocator("iframe");
-              const tweet = frame.locator("article").first();
-          
-              // Wait for tweet content
-              await tweet.waitFor({ timeout: 30000 });
-          
-              const filePath = path.join(outDir, `tweet-${i + 1}.png`);
-              await tweet.screenshot({ path: filePath });
-          
-              saved.push(filePath.replace(/\\/g, "/"));
+              try {
+                const filePath = path.join(outDir, `tweet-${i + 1}.png`);
+                await renderTweetToPng(page, url, filePath);
+                saved.push(filePath.replace(/\\/g, "/"));
+                console.log(`✅ Rendered: ${url} -> ${filePath}`);
+              } catch (err) {
+                console.error(`⚠️ Failed to render tweet: ${url}`);
+                console.error(err?.stack || err);
+              }
             }
           
             await browser.close();
           
             updateReadmeWithImages(saved);
-            console.log("Updated README with tweet images:", saved);
-          })();
+            console.log("✅ Updated README with tweet images:", saved);
+          })().catch((e) => {
+            console.error("❌ Fatal error:", e?.stack || e);
+            process.exit(1);
+          });
           EOF
           node render-x-tweets.mjs 
         
