@@ -163,6 +163,12 @@ Over the years, I've worked across the full DevOps lifecycle — from infrastruc
   </a>
 </p>
 
+---
+<h2 align="center"> Latest Tweets</h2>
+
+<!-- TWITTER:START -->
+<!-- TWITTER:END -->
+
 <p align="center">
   <a href="https://x.com/devops_sre18">
     <img src="https://img.shields.io/badge/-Follow%20on%20X-1DA1F2?style=for-the-badge&logo=x&logoColor=white" alt="Follow on X" />
