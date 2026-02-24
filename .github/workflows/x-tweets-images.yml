@@ -1,0 +1,42 @@
+name: X Tweets as Images
+
+on:
+  schedule:
+    - cron: "* * * * *"  # every 6 hours
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  render_tweets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Playwright
+        run: |
+          npm init -y
+          npm i playwright
+          npx playwright install --with-deps chromium
+
+      - name: Generate tweet images + update README
+        env:
+          X_USERNAME: "devops_sre18"
+          MAX_TWEETS: "3"
+          X_RSS_FEED_URL: "https://rss.app/feeds/abeBhhOmnKG40Fm0.xml"
+        run: |
+          node .github/scripts/render-x-tweets.mjs
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md assets/tweets
+          git commit -m "Update tweet images" || exit 0
+          git push

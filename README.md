@@ -166,8 +166,8 @@ Over the years, I've worked across the full DevOps lifecycle — from infrastruc
 ---
 <h2 align="center"> Latest Tweets</h2>
 
-<!-- TWITTER:START -->
-<!-- TWITTER:END -->
+<!--START_SECTION:TWEETS_IMG-->
+<!--END_SECTION:TWEETS_IMG-->
 
 <p align="center">
   <a href="https://x.com/devops_sre18">
