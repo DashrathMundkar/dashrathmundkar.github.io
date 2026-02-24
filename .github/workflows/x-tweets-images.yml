@@ -100,7 +100,7 @@ jobs:
                   imagePaths
                     .map(
                       (p) =>
-                        `<p align="center"><img src="${p}" alt="Latest post from X" width="600" /></p>`
+                        `<p align="center"><img src="${p}" alt="Latest post from X" width="400" /></p>`
                     )
                     .join("\n") +
                   "\n";
