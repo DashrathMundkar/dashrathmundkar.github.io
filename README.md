@@ -169,7 +169,6 @@ Over the years, I've worked across the full DevOps lifecycle — from infrastruc
 <h2 align="center"> Latest Tweets</h2>
 
 <!--START_SECTION:TWEETS_IMG-->
-<p align="center"><img src="assets/tweets/tweet-1.png" alt="Latest post from X" width="400" /></p>
 <p align="center"><img src="assets/tweets/tweet-2.png" alt="Latest post from X" width="400" /></p>
 <!--END_SECTION:TWEETS_IMG-->
 
