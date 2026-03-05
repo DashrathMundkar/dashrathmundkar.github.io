@@ -1,5 +1,4 @@
 <div align="center">
-<img width="1200" height="475" alt="Portfolio Banner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
 </div>
 
 # 🚀 Dashrath Mundkar - Professional Portfolio
@@ -25,9 +24,9 @@ A modern, responsive, and feature-rich professional portfolio website built with
 3. **Education & Certifications** - Academic background
 4. **Achievements** - Top impact highlights
 5. **Skills** - Technical arsenal
-6. **GitHub Projects** - Featured projects
-7. **Stack Overflow** - Community contributions
-8. **Connect** - Social media links
+6. **Stack Overflow** - Community contributions
+7. **Connect** - Social media links
+8. **Email** - dashrathmundkar@gmail.com
 
 ## 🚀 Deployment
 

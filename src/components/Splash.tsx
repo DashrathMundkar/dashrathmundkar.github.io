@@ -46,9 +46,6 @@ export const Splash: React.FC<{ onComplete: () => void }> = ({ onComplete }) => 
             transition={{ ease: "linear" }}
           />
         </div>
-        <div className="mt-4 text-xs font-mono text-slate-400 uppercase tracking-widest">
-          Initializing System...
-        </div>
       </motion.div>
     </AnimatePresence>
   );

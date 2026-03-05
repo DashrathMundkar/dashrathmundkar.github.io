@@ -8,8 +8,7 @@
     "phone": "",
     "links": [
       { "name": "LinkedIn", "url": "https://www.linkedin.com/in/dashrathmundkar" },
-      { "name": "Portfolio", "url": "https://github.com/DashrathMundkar" },
-      { "name": "Personal", "url": "https://dashrathmundkar.github.io/" }
+      { "name": "Email", "url": "mailto:dashrathmundkar@gmail.com" }
     ]
   },
   "experience": [

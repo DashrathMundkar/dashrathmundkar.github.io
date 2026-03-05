@@ -23,12 +23,15 @@ import {
   Globe,
   Moon,
   Sun,
-  Code
+  Code,
+  Menu,
+  X
 } from 'lucide-react';
 
 export default function App() {
   const [showSplash, setShowSplash] = useState(true);
   const [activeSection, setActiveSection] = useState('hero');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const saved = localStorage.getItem('darkMode');
     return saved !== null ? JSON.parse(saved) : true; // default to dark mode
@@ -40,8 +43,18 @@ export default function App() {
   }, [isDarkMode]);
 
   useEffect(() => {
+    if (isMobileMenuOpen) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [isMobileMenuOpen]);
+
+  useEffect(() => {
     const handleScroll = () => {
-      const sections = ['hero', 'experience', 'education', 'achievements', 'skills', 'projects', 'stackoverflow', 'connect'];
+      const sections = ['hero', 'experience', 'education', 'achievements', 'skills', 'stackoverflow', 'connect'];
       const scrollPosition = window.scrollY + window.innerHeight / 3;
 
       for (const section of sections) {
@@ -60,6 +73,7 @@ export default function App() {
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
+      setIsMobileMenuOpen(false);
     }
   };
 
@@ -87,10 +101,10 @@ export default function App() {
               ? 'border-white/5 bg-slate-950/50'
               : 'border-slate-200 bg-white/80'
           }`}>
-            <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
               <div className={`text-xl font-bold tracking-tighter ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>DM</div>
               <div className={`hidden md:flex space-x-8 text-sm font-medium ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-                {['Experience', 'Education', 'Achievements', 'Skills', 'Projects', 'Stack Overflow', 'Connect'].map((item) => (
+                {['Experience', 'Education', 'Achievements', 'Skills', 'Stack Overflow', 'Connect'].map((item) => (
                   <button
                     key={item}
                     onClick={() => scrollTo(item.toLowerCase())}
@@ -128,13 +142,72 @@ export default function App() {
                   <Mail className="w-4 h-4" />
                   <span>Contact</span>
                 </a>
+                <button
+                  onClick={() => setIsMobileMenuOpen((open) => !open)}
+                  className={`md:hidden p-2 rounded-full transition-colors ${
+                    isDarkMode
+                      ? 'bg-white/10 hover:bg-white/20 text-white'
+                      : 'bg-slate-100 hover:bg-slate-200 text-slate-900'
+                  }`}
+                  aria-label="Toggle navigation menu"
+                  aria-expanded={isMobileMenuOpen}
+                >
+                  {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                </button>
+              </div>
+            </div>
+            <div className={`md:hidden overflow-hidden transition-all ${
+              isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+            }`}>
+              <div className={`px-4 pb-4 pt-2 border-t ${
+                isDarkMode ? 'border-white/10' : 'border-slate-200'
+              }`}>
+                <div className="flex flex-col space-y-2">
+                  {['Experience', 'Education', 'Achievements', 'Skills', 'Stack Overflow', 'Connect'].map((item) => (
+                    <button
+                      key={item}
+                      onClick={() => scrollTo(item.toLowerCase())}
+                      className={`text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                        activeSection === item.toLowerCase()
+                          ? 'text-sky-400 bg-sky-500/10'
+                          : isDarkMode
+                            ? 'text-slate-300 hover:text-white hover:bg-white/5'
+                            : 'text-slate-700 hover:text-slate-900 hover:bg-slate-100'
+                      }`}
+                    >
+                      {item}
+                    </button>
+                  ))}
+                </div>
+                <a
+                  href={`mailto:${resumeData.basics.email}`}
+                  className={`mt-3 inline-flex w-full items-center justify-center space-x-2 text-sm font-semibold px-4 py-3 rounded-lg transition-colors ${
+                    isDarkMode
+                      ? 'text-white bg-white/10 hover:bg-white/20'
+                      : 'text-slate-900 bg-slate-100 hover:bg-slate-200'
+                  }`}
+                >
+                  <Mail className="w-4 h-4" />
+                  <span>Contact</span>
+                </a>
               </div>
             </div>
           </nav>
 
+          {isMobileMenuOpen && (
+            <button
+              type="button"
+              aria-label="Close navigation menu"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`fixed inset-0 z-30 md:hidden transition-colors ${
+                isDarkMode ? 'bg-slate-950/70' : 'bg-slate-900/40'
+              }`}
+            />
+          )}
+
           {/* Scroll Spy Indicator */}
           <div className="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col space-y-4">
-            {['hero', 'experience', 'education', 'achievements', 'skills', 'projects', 'stackoverflow', 'connect'].map((section) => (
+            {['hero', 'experience', 'education', 'achievements', 'skills', 'stackoverflow', 'connect'].map((section) => (
               <button
                 key={section}
                 onClick={() => scrollTo(section)}
@@ -150,9 +223,9 @@ export default function App() {
             ))}
           </div>
 
-          <main className="relative z-10 max-w-5xl mx-auto px-6 pb-24">
+          <main className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 pb-24">
             {/* Hero Section */}
-            <section id="hero" className="min-h-screen flex flex-col justify-center pt-20">
+            <section id="hero" className="min-h-screen flex flex-col justify-center pt-24 sm:pt-20">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -190,11 +263,7 @@ export default function App() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5, duration: 0.8 }}
                 >
-                  <h2 className={`text-xl md:text-2xl font-bold max-w-3xl leading-tight bg-gradient-to-r ${
-                    isDarkMode
-                      ? 'from-slate-200 via-slate-300 to-slate-400'
-                      : 'from-slate-700 via-slate-800 to-slate-900'
-                  } bg-clip-text text-transparent`}>
+                  <h2 className="text-xl md:text-2xl font-bold italic max-w-3xl leading-tight bg-gradient-to-r from-sky-500 to-violet-500 bg-clip-text text-transparent">
                     {resumeData.basics.title}
                   </h2>
                 </motion.div>
@@ -264,7 +333,7 @@ export default function App() {
                       }`}
                     >
                       {link.name === 'LinkedIn' && <Linkedin className="w-5 h-5" />}
-                      {link.name === 'Portfolio' && <Github className="w-5 h-5" />}
+                      {link.name === 'Email' && <Mail className="w-5 h-5" />}
                       {link.name === 'Personal' && <Globe className="w-5 h-5" />}
                       <span className="text-sm font-medium">{link.name}</span>
                     </a>
@@ -625,127 +694,6 @@ export default function App() {
               </motion.div>
             </section>
 
-
-            {/* Projects Section */}
-            <section id="projects" className="py-32">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                className="space-y-16"
-              >
-                <div className="flex items-center space-x-4">
-                  <div className="p-4 rounded-2xl bg-gradient-to-br from-blue-500/20 to-cyan-600/20 backdrop-blur-sm">
-                    <Github className="w-7 h-7 text-blue-400" />
-                  </div>
-                  <div>
-                    <h2 className={`text-4xl md:text-5xl font-black tracking-tight ${
-                      isDarkMode ? 'text-white' : 'text-slate-900'
-                    }`}>GitHub Projects</h2>
-                    <p className={`text-sm mt-1 ${isDarkMode ? 'text-slate-500' : 'text-slate-600'}`}>
-                      Open-source projects & contributions
-                    </p>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {[
-                    {
-                      title: "Private AKS Cluster Terraform",
-                      description: "Infrastructure as Code for deploying a secure, private Azure Kubernetes Service cluster using Terraform",
-                      tags: ["Terraform", "Azure", "Kubernetes", "IaC"],
-                      url: "https://github.com/DashrathMundkar/private-aks-cluster-terraform"
-                    },
-                    {
-                      title: "Setup Jenkins Terraform",
-                      description: "Automated Jenkins CI/CD infrastructure provisioning using Terraform, enabling scalable and reproducible deployment pipelines",
-                      tags: ["Terraform", "Jenkins", "CI/CD", "IaC"],
-                      url: "https://github.com/DashrathMundkar/setup-jenkins-terraform"
-                    },
-                    {
-                      title: "CI/CD Java Maven Project",
-                      description: "Complete CI/CD pipeline for a Java Maven application with automated build, test, and deployment workflows",
-                      tags: ["Java", "Maven", "CI/CD", "Jenkins"],
-                      url: "https://github.com/DashrathMundkar/cicd-java-maven-project"
-                    }
-                  ].map((project, index) => (
-                    <motion.a
-                      key={index}
-                      href={project.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.1 }}
-                      whileHover={{ y: -8, scale: 1.02 }}
-                      className={`relative p-8 rounded-2xl border-2 overflow-hidden group cursor-pointer transition-all duration-300 ${
-                        isDarkMode
-                          ? 'bg-gradient-to-br from-white/[0.07] to-white/[0.02] border-white/10 hover:border-blue-500/50 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)]'
-                          : 'bg-gradient-to-br from-white via-blue-50/30 to-cyan-50/30 border-slate-200 hover:border-blue-400/50 shadow-lg hover:shadow-[0_0_30px_rgba(59,130,246,0.3)]'
-                      }`}
-                    >
-                      {/* Animated gradient blob */}
-                      <div className={`absolute -top-10 -right-10 w-40 h-40 rounded-full blur-3xl transition-all duration-500 ${
-                        isDarkMode
-                          ? 'bg-gradient-to-br from-blue-500/20 to-cyan-500/20 group-hover:from-blue-500/30 group-hover:to-cyan-500/30'
-                          : 'bg-gradient-to-br from-blue-400/30 to-cyan-400/30 group-hover:from-blue-400/40 group-hover:to-cyan-400/40'
-                      }`} />
-
-                      <div className="relative z-10 space-y-4">
-                        {/* Header with icon */}
-                        <div className="flex items-start justify-between">
-                          <div className="flex-1">
-                            <h3 className={`text-xl font-bold mb-2 ${
-                              isDarkMode ? 'text-white' : 'text-slate-900'
-                            } group-hover:text-blue-400 transition-colors`}>
-                              {project.title}
-                            </h3>
-                          </div>
-                          <ExternalLink className={`w-5 h-5 shrink-0 ml-2 transition-all group-hover:translate-x-1 group-hover:-translate-y-1 ${
-                            isDarkMode ? 'text-slate-500 group-hover:text-blue-400' : 'text-slate-600 group-hover:text-blue-500'
-                          }`} />
-                        </div>
-
-                        {/* Description */}
-                        <p className={`text-sm leading-relaxed ${
-                          isDarkMode ? 'text-slate-400' : 'text-slate-700'
-                        }`}>
-                          {project.description}
-                        </p>
-
-                        {/* Tags */}
-                        <div className="flex flex-wrap gap-2 pt-4">
-                          {project.tags.map((tag, i) => (
-                            <span
-                              key={i}
-                              className={`px-3 py-1 rounded-lg text-xs font-medium transition-all ${
-                                isDarkMode
-                                  ? 'bg-blue-500/10 border border-blue-500/20 text-slate-300 group-hover:bg-blue-500/20 group-hover:border-blue-500/40'
-                                  : 'bg-blue-100 border border-blue-200 text-blue-700 group-hover:bg-blue-200'
-                              }`}
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-
-                        {/* GitHub link hint */}
-                        <div className={`text-xs font-medium flex items-center space-x-1 pt-2 transition-colors ${
-                          isDarkMode
-                            ? 'text-slate-600 group-hover:text-blue-400'
-                            : 'text-slate-500 group-hover:text-blue-600'
-                        }`}>
-                          <Github className="w-4 h-4" />
-                          <span>View on GitHub</span>
-                        </div>
-                      </div>
-                    </motion.a>
-                  ))}
-                </div>
-              </motion.div>
-            </section>
-
             {/* Stack Overflow Contributions Section */}
             <section id="stackoverflow" className="py-32">
               <motion.div
@@ -804,7 +752,7 @@ export default function App() {
                       whileHover={{ y: -8, scale: 1.02 }}
                       className={`relative p-8 rounded-2xl border-2 overflow-hidden group cursor-pointer transition-all duration-300 ${
                         isDarkMode
-                          ? 'bg-gradient-to-br from-white/[0.07] to-white/[0.02] border-white/10 hover:border-orange-500/50 hover:shadow-[0_0_30px_rgba(251,146,60,0.2)]'
+                          ? 'bg-gradient-to-br from-white/[0.07] to-white/[0.02] border-white/10 hover:border-orange-500/50'
                           : 'bg-gradient-to-br from-white via-orange-50/30 to-red-50/30 border-slate-200 hover:border-orange-400/50 shadow-lg hover:shadow-[0_0_30px_rgba(251,146,60,0.3)]'
                       }`}
                     >
