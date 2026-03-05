@@ -1,0 +1,196 @@
+name: X Tweets as Images
+
+on:
+  schedule:
+    - cron: "0 */2 * * *"  # every 6 hours
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  render_tweets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Playwright
+        run: |
+          npm init -y
+          npm i playwright
+          npx playwright install --with-deps chromium
+
+      - name: Generate tweet images + update README
+        env:
+          X_USERNAME: "devops_sre18"
+          MAX_TWEETS: "2"
+          X_RSS_FEED_URL: "https://rss.app/feeds/abeBhhOmnKG40Fm0.xml"
+        run: |
+          cat > render-x-tweets.mjs << 'EOF'
+          import fs from "fs";
+          import path from "path";
+          import { chromium } from "playwright";
+          
+          const username = process.env.X_USERNAME || "devops_sre18";
+          const maxTweets = Number(process.env.MAX_TWEETS || 3);
+          
+          // Provide this via GitHub Actions secret, e.g. secrets.X_RSS_FEED_URL
+          const RSS_FEED_URL = process.env.X_RSS_FEED_URL || "";
+          
+          if (!RSS_FEED_URL) {
+            console.error("❌ Missing X_RSS_FEED_URL.");
+            console.error("Set it in GitHub repo secrets and pass it into the workflow env.");
+            console.error(`Expected an RSS feed for: https://x.com/${username}`);
+            process.exit(1);
+          }
+          
+          const outDir = path.join("assets", "tweets");
+          fs.mkdirSync(outDir, { recursive: true });
+          
+          async function fetchTweetLinksFromRss(rssUrl, limit) {
+            const res = await fetch(rssUrl);
+            if (!res.ok) throw new Error(`Failed to fetch RSS feed: ${res.status} ${res.statusText}`);
+            const xml = await res.text();
+          
+            // Extract tweet status links. RSS feeds typically have some non-status links too.
+            const links = [];
+            const linkRegex = /<link>(.*?)<\/link>/g;
+          
+            let match;
+            while ((match = linkRegex.exec(xml)) && links.length < limit * 5) {
+              const url = (match[1] || "").trim();
+          
+              // Accept both x.com and twitter.com status URLs
+              const isStatus =
+                (url.includes("x.com/") || url.includes("twitter.com/")) && url.includes("/status/");
+          
+              if (isStatus) links.push(url);
+            }
+          
+            // De-duplicate and return top N
+            const uniq = [...new Set(links)];
+            return uniq.slice(0, limit);
+          }
+          
+          function updateReadmeWithImages(imagePaths) {
+            const readmePath = "README.md";
+            if (!fs.existsSync(readmePath)) {
+              throw new Error("README.md not found at repository root.");
+            }
+          
+            const readme = fs.readFileSync(readmePath, "utf8");
+            const start = "<!--START_SECTION:TWEETS_IMG-->";
+            const end = "<!--END_SECTION:TWEETS_IMG-->";
+          
+            if (!readme.includes(start) || !readme.includes(end)) {
+              throw new Error(
+                `Missing markers in README.md.\nAdd these where you want images:\n${start}\n${end}`
+              );
+            }
+          
+            const block =
+              imagePaths.length === 0
+                ? "\n_No recent tweets found._\n"
+                : "\n" +
+                  imagePaths
+                    .map(
+                      (p) =>
+                        `<p align="center"><img src="${p}" alt="Latest post from X" width="400" /></p>`
+                    )
+                    .join("\n") +
+                  "\n";
+          
+            const updated = readme.replace(
+              new RegExp(`${start}[\\s\\S]*?${end}`),
+              `${start}${block}${end}`
+            );
+          
+            fs.writeFileSync(readmePath, updated, "utf8");
+          }
+          
+          async function renderTweetToPng(page, tweetUrl, filePath) {
+            // Use publish.twitter.com so the embed renders consistently, then we screenshot the tweet card.
+            const embedUrl =
+            "https://publish.twitter.com/?query=" +
+            encodeURIComponent(tweetUrl) +
+            "&widget=Tweet&theme=dark&dnt=true";
+          
+            await page.goto(embedUrl, { waitUntil: "networkidle" });
+          
+            // ✅ FIX: publish.twitter.com has multiple iframes; target the tweet embed iframe only.
+            const tweetFrame = page.frameLocator('iframe[title="X Post"]');
+          
+            // Try the primary selector, then fall back if embed structure changes.
+            let tweet = tweetFrame.locator("article").first();
+            if ((await tweet.count()) === 0) {
+              tweet = tweetFrame.locator('[data-testid="tweet"]').first();
+            }
+          
+            await tweet.waitFor({ state: "visible", timeout: 45000 });
+          
+            // Small delay to allow fonts/images to settle
+            await page.waitForTimeout(1200);
+          
+            await tweet.screenshot({ path: filePath });
+          }
+          
+          (async () => {
+            const tweetLinks = await fetchTweetLinksFromRss(RSS_FEED_URL, maxTweets);
+          
+            if (tweetLinks.length === 0) {
+              console.log("No tweet links found in RSS feed.");
+              updateReadmeWithImages([]);
+              process.exit(0);
+            }
+          
+            const browser = await chromium.launch();
+            const page = await browser.newPage({
+              viewport: { width: 980, height: 1400 },
+              deviceScaleFactor: 2, // crisper screenshots
+            });
+          
+            // Reduce cookie/consent interruptions
+            await page.setExtraHTTPHeaders({
+              "Accept-Language": "en-US,en;q=0.9",
+            });
+          
+            const saved = [];
+          
+            for (let i = 0; i < tweetLinks.length; i++) {
+              const url = tweetLinks[i];
+          
+              try {
+                const filePath = path.join(outDir, `tweet-${i + 1}.png`);
+                await renderTweetToPng(page, url, filePath);
+                saved.push(filePath.replace(/\\/g, "/"));
+                console.log(`✅ Rendered: ${url} -> ${filePath}`);
+              } catch (err) {
+                console.error(`⚠️ Failed to render tweet: ${url}`);
+                console.error(err?.stack || err);
+              }
+            }
+          
+            await browser.close();
+          
+            updateReadmeWithImages(saved);
+            console.log("✅ Updated README with tweet images:", saved);
+          })().catch((e) => {
+            console.error("❌ Fatal error:", e?.stack || e);
+            process.exit(1);
+          });
+          EOF
+          node render-x-tweets.mjs 
+        
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md assets/tweets
+          git commit -m "Update tweet images" || exit 0
+          git push
