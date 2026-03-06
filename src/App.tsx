@@ -78,6 +78,13 @@ export default function App() {
     }
   };
 
+  const publications = resumeData.extra.find(
+    (extra) => extra.type.toLowerCase() === 'publications'
+  );
+  const supplementalExtras = resumeData.extra.filter(
+    (extra) => extra.type.toLowerCase() !== 'publications'
+  );
+
   return (
     <div className={`min-h-screen font-sans transition-colors duration-300 ${
       isDarkMode
@@ -524,6 +531,34 @@ export default function App() {
                         </div>
                       </motion.div>
                     ))}
+
+                    {publications && (
+                      <div className="pt-2">
+                        <h3 className={`text-lg font-bold mb-3 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                          Publications
+                        </h3>
+                        <ul className="space-y-1.5">
+                          {publications.items.map((item, i) => (
+                            <motion.li
+                              key={i}
+                              initial={{ opacity: 0, x: 10 }}
+                              whileInView={{ opacity: 1, x: 0 }}
+                              viewport={{ once: true }}
+                              transition={{ delay: i * 0.08 }}
+                              whileHover={{ x: 3 }}
+                              className={`flex items-start space-x-2 p-2.5 rounded-lg border transition-all text-xs ${
+                                isDarkMode
+                                  ? 'text-slate-300 bg-white/[0.02] border-white/5 hover:bg-white/[0.05] hover:border-sky-500/30'
+                                  : 'text-slate-700 bg-white border-slate-200 hover:bg-sky-50/50 hover:border-sky-400/50'
+                              }`}
+                            >
+                              <ExternalLink className="w-3.5 h-3.5 text-sky-400 shrink-0 mt-0.5" />
+                              <span className="leading-snug font-medium">{item}</span>
+                            </motion.li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                   </motion.div>
 
                   {/* Certifications & Extra */}
@@ -546,20 +581,20 @@ export default function App() {
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1 }}
                             whileHover={{ x: 3 }}
-                            className={`flex items-start space-x-2 p-2.5 rounded-lg border transition-all text-xs ${
+                            className={`flex items-start space-x-2 p-2.5 rounded-lg border transition-all ${
                               isDarkMode
                                 ? 'text-slate-300 bg-white/[0.02] border-white/5 hover:bg-white/[0.05] hover:border-purple-500/30'
                                 : 'text-slate-700 bg-white border-slate-200 hover:bg-purple-50/50 hover:border-purple-400/50'
                             }`}
                           >
                             <Award className="w-3.5 h-3.5 text-purple-400 shrink-0 mt-0.5" />
-                            <span className="leading-snug font-medium">{cert}</span>
+                            <span className="leading-snug text-sm font-medium">{cert}</span>
                           </motion.li>
                         ))}
                       </ul>
                     </div>
 
-                    {resumeData.extra.map((extra, index) => (
+                    {supplementalExtras.map((extra, index) => (
                       <div key={index}>
                         <h3 className={`text-lg font-bold mb-3 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
                           {extra.type}

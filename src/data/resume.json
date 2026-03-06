@@ -104,16 +104,6 @@
       "institution": "University of Pune",
       "degree": "Bachelor of Engineering (B.E.), Computer Engineering",
       "dates": "2012 - 2016"
-    },
-    {
-      "institution": "Shivaji Mahavidyalaya, Udgir",
-      "degree": "High School, Computer Science",
-      "dates": "2010 - 2012"
-    },
-    {
-      "institution": "Vidya Vardhini High School, Udgir",
-      "degree": "Secondary High School",
-      "dates": "June 2006 - June 2009"
     }
   ],
   "certifications": [
@@ -130,7 +120,7 @@
       "type": "Publications",
       "items": [
         "Vision Based Hand Gesture Recognition For Real Time Home Automation Application",
-        "Model and Middlewares for Fog Computing"
+        "Models and Middlewares for Fog Computing"
       ]
     }
   ]
