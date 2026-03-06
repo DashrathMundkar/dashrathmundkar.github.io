@@ -451,14 +451,14 @@ export default function App() {
                           isDarkMode ? 'bg-slate-800/50 text-slate-400' : 'bg-slate-100 text-slate-600'
                         }`}>{exp.dates}</span>
                       </div>
-                      <ul className={`space-y-1 text-xs leading-snug ${isDarkMode ? 'text-slate-400' : 'text-slate-700'}`}>
-                        {exp.bullets.slice(0, 3).map((bullet, i) => (
-                          <li key={i} className="flex items-start gap-2">
-                            <span className="mt-1 w-1 h-1 rounded-full bg-sky-400 shrink-0" />
-                            <span>{bullet}</span>
-                          </li>
-                        ))}
-                      </ul>
+                  <ul className={`space-y-1 text-sm leading-snug ${isDarkMode ? 'text-slate-400' : 'text-slate-700'}`}>
+                    {exp.bullets.slice(0, 3).map((bullet, i) => (
+                      <li key={i} className="flex items-start gap-2">
+                        <span className="mt-1 w-1 h-1 rounded-full bg-sky-400 shrink-0" />
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
                     </motion.div>
                   ))}
                 </div>
