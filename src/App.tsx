@@ -306,14 +306,14 @@ export default function App() {
                     <span>View Experience</span>
                     <ChevronDown className="w-5 h-5 group-hover:translate-y-0.5 transition-transform" />
                   </button>
-                  <button className={`px-8 py-4 rounded-xl border-2 font-bold text-base transition-all duration-300 flex items-center space-x-2 hover:shadow-lg transform hover:-translate-y-0.5 ${
+                  <a href="/images/CV.pdf" download className={`px-8 py-4 rounded-xl border-2 font-bold text-base transition-all duration-300 flex items-center space-x-2 hover:shadow-lg transform hover:-translate-y-0.5 ${
                     isDarkMode
                       ? 'bg-white/5 border-white/20 text-white hover:bg-white/10 hover:border-white/30'
                       : 'bg-white border-slate-300 text-slate-900 hover:bg-slate-50 hover:border-slate-400 shadow-md'
                   }`}>
                     <Download className="w-5 h-5" />
                     <span>Download Resume</span>
-                  </button>
+                  </a>
                 </motion.div>
 
                 <motion.div
