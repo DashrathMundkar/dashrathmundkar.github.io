@@ -792,10 +792,10 @@ export default function App() {
                       description: "Production-ready Terraform configuration for deploying secure private Azure Kubernetes Service clusters with best practices"
                     },
                     {
-                      name: "Setup Jenkins Terraform",
-                      url: "https://github.com/DashrathMundkar/setup-jenkins-terraform",
+                      name: "Private EKS clsuter",
+                      url: "https://github.com/DashrathMundkar/priavte-eks-network-firewall-alb-istio",
                       tags: ["Terraform", "Jenkins", "CI/CD"],
-                      description: "Automated Jenkins infrastructure provisioning using Terraform with pre-configured plugins and security hardening"
+                      description: "Production-grade EKS setup with AWS Network Firewall, ALB Ingress, Istio service mesh, and Terraform infrastructure as code."
                     },
                     {
                       name: "CI/CD Java Maven Project",
