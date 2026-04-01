@@ -794,7 +794,7 @@ export default function App() {
                     {
                       name: "Private EKS clsuter",
                       url: "https://github.com/DashrathMundkar/priavte-eks-network-firewall-alb-istio",
-                      tags: ["Terraform", "Jenkins", "CI/CD"],
+                      tags: ["Terraform", "EKS", "AWS"],
                       description: "Production-grade EKS setup with AWS Network Firewall, ALB Ingress, Istio service mesh, and Terraform infrastructure as code."
                     },
                     {
