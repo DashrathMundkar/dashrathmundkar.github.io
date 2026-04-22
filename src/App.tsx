@@ -1037,7 +1037,7 @@ export default function App() {
                     {
                       name: "X (Twitter)",
                       description: "Follow for DevOps insights and tech updates",
-                      url: "https://x.com/devops_sre18",
+                      url: "https://x.com/dashmundkar",
                       icon: Github, // Using Github icon as placeholder, could use custom
                       color: "from-black to-slate-800",
                       lightColor: "from-slate-900 to-slate-800",
