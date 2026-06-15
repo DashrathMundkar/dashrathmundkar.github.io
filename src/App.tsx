@@ -802,8 +802,16 @@ export default function App() {
                       url: "https://github.com/DashrathMundkar/cicd-java-maven-project",
                       tags: ["Java", "Maven", "CI/CD"],
                       description: "Complete CI/CD pipeline implementation for Java Maven applications with automated testing and deployment"
+                    },
+                    {
+                      name: "Microsoft Login Picker",
+                      url: "https://chromewebstore.google.com/detail/microsoft-login-picker/lbammodolnfnfpmdpmalidpaeecnifmp?hl=en-GB&utm_source=ext_sidebar",
+                      tags: ["Chrome Extension", "TypeScript", "Productivity"],
+                      description: "Chrome extension published on the Chrome Web Store that streamlines switching between multiple Microsoft accounts during login",
+                      badge: "Chrome Extension",
+                      linkLabel: "View on Chrome Web Store"
                     }
-                  ].map((project, index) => (
+                  ].map((project: { name: string; url: string; tags: string[]; description: string; badge?: string; linkLabel?: string }, index) => (
                     <motion.a
                       key={index}
                       href={project.url}
@@ -835,7 +843,7 @@ export default function App() {
                             : 'bg-violet-100 border border-violet-200 text-violet-700'
                         }`}>
                           <Github className="w-3 h-3" />
-                          <span>Open Source</span>
+                          <span>{project.badge ?? "Open Source"}</span>
                         </div>
 
                         {/* Project Name */}
@@ -875,7 +883,7 @@ export default function App() {
                             : 'text-slate-500 group-hover:text-violet-600'
                         }`}>
                           <ExternalLink className="w-3 h-3" />
-                          <span>View on GitHub</span>
+                          <span>{project.linkLabel ?? "View on GitHub"}</span>
                         </div>
                       </div>
                     </motion.a>
