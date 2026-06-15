@@ -804,6 +804,18 @@ export default function App() {
                       description: "Complete CI/CD pipeline implementation for Java Maven applications with automated testing and deployment"
                     },
                     {
+                      name: "Jenkins Slave Base for Kubernetes/OpenShift",
+                      url: "https://github.com/DashrathMundkar/Jenkins-Slave-Base-for-Kubernetes-OpenShift",
+                      tags: ["Jenkins", "Kubernetes", "OpenShift", "Docker"],
+                      description: "Base Jenkins agent (slave) image designed to run as dynamic build pods on Kubernetes and OpenShift for scalable CI/CD pipelines"
+                    },
+                    {
+                      name: "OpenShift Pact Broker",
+                      url: "https://github.com/DashrathMundkar/openshift-pact-broker",
+                      tags: ["OpenShift", "Pact", "Contract Testing", "Docker"],
+                      description: "Deployment of the Pact Broker on OpenShift to manage consumer-driven contract tests between microservices"
+                    },
+                    {
                       name: "Microsoft Login Picker",
                       url: "https://chromewebstore.google.com/detail/microsoft-login-picker/lbammodolnfnfpmdpmalidpaeecnifmp?hl=en-GB&utm_source=ext_sidebar",
                       tags: ["Chrome Extension", "TypeScript", "Productivity"],
