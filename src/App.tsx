@@ -286,7 +286,7 @@ export default function App() {
                     isDarkMode ? 'text-slate-300' : 'text-slate-700'
                   }`}
                 >
-                  I'm a DevOps Engineer with <span className="font-semibold">7+ years of experience</span> designing, automating, and scaling cloud-native infrastructure using Azure, Kubernetes, and modern DevOps tooling. I specialize in building high-availability platforms, optimizing CI/CD pipelines, and enabling engineering teams to ship software faster, safer, and with full observability.
+                  I'm a DevOps Engineer with <span className="font-semibold">8+ years of experience</span> designing, automating, and scaling cloud-native infrastructure using Azure, Kubernetes, and modern DevOps tooling. I specialize in building high-availability platforms, optimizing CI/CD pipelines, and enabling engineering teams to ship software faster, safer, and with full observability.
                 </motion.p>
 
                 <motion.div
